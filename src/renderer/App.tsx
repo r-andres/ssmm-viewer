@@ -1,36 +1,34 @@
 import React, { useState } from "react";
 import DirectoryTree from "../components/DirectoryTree";
 import SnapshotTimeline from "../components/SnapshotTimeline";
-import { Snapshot } from "../types/models";
-import { getMockSnapshots } from "../api/mock";
+import { Snapshot, SnapshotDiff } from "../types/models";
+import { getMockFilesystem, getMockSnapshots } from "../api/mock";
 import AppLayout from "../layout/AppLayout";
+import { diffSnapshots } from "../utils/diff"
+import DiffViewer from "../components/DiffViewer";
 
 
 export default function App() {
   const mockSnapshots: Snapshot[] = getMockSnapshots();
   const [currentSnapshot, setCurrentSnapshot] = useState<string | null>(mockSnapshots[0].timestamp);
+  const [diffs, setDiffs] = useState<SnapshotDiff>([])
+  function handleSnapshotSelect(timestamp: string) {
 
-  // return (
-  //   <div style={{ display: "flex", height: "100vh" }}>
-  //     <div style={{
-  //       width: 300,
-  //       borderRight: "1px solid #333",
-  //       overflow: "auto"
-  //     }}>
-  //       {/* Pass the current snapshot to the tree */}
-  //       <DirectoryTree currentSnapshot={currentSnapshot} />
-  //     </div>
+    const fileStatusSnapshots = mockSnapshots.filter(s => s.event === "file_status");
 
-  //     <div style={{ flex: 1, padding: 20 }}>
-  //       <SnapshotTimeline
-  //         snapshots={mockSnapshots}
-  //         currentSnapshot={currentSnapshot}
-  //         onSelect={(snap) => setCurrentSnapshot(snap.timestamp)}
-  //       />
-  //     </div>
-  //   </div>
-  // );
+    const index = fileStatusSnapshots.indexOf(fileStatusSnapshots.find(s => s.timestamp === timestamp)!)
 
+    if (index > 0) {
+      const oldFs = getMockFilesystem(fileStatusSnapshots[index - 1].timestamp)
+      const newFs = getMockFilesystem(timestamp)
+      const newDiff = diffSnapshots(oldFs, newFs)
+      setDiffs(newDiff)
+    } else {
+      setDiffs([])
+    }
+
+    setCurrentSnapshot(timestamp)
+  }
 
   return (
     <AppLayout
@@ -39,16 +37,16 @@ export default function App() {
         <SnapshotTimeline
            snapshots={mockSnapshots}
           currentSnapshot={currentSnapshot}
-          onSelect={(snap) => setCurrentSnapshot(snap.timestamp)}
+          onSelect={(snap) => handleSnapshotSelect(snap.timestamp)}
         />
       }
 
       sidebar={
-       <DirectoryTree currentSnapshot={currentSnapshot} />
+       <DiffViewer diffs={diffs} />
       }
 
       content={
-        <h3>Hola</h3>
+       <DirectoryTree currentSnapshot={currentSnapshot} />
       }
 
     />

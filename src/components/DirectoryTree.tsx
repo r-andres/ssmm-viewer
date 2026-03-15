@@ -42,7 +42,6 @@ export default function DirectoryTree({ currentSnapshot }: Props) {
                 alignItems: 'center',
                 padding: '4px 6px',
                 borderRadius: '4px',
-                // backgroundColor: isExpanded ? '#333333' : 'transparent',
                 transition: 'background 0.2s',
               }}
             >

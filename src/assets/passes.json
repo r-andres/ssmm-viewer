@@ -1,0 +1,78 @@
+
+[
+    {
+        "_id": "697d66d0981067f4b00baa79",
+        "antenna": "HGA",
+        "aocs_mode": "NM",
+        "call_eng": "RE",
+        "encoding": "Turbo 1/2 random",
+        "owlt": "000.00:16:03.563",
+        "pass_number": "1052",
+        "planner": "CF",
+        "station": "MLG",
+        "sym_rate": "526315",
+        "time_end": "2026-02-27T19:41:25.000Z",
+        "time_start": "2026-02-27T09:41:25.000Z",
+        "tm_rate": "262100"
+    },
+    {
+        "_id": "697d66d0981067f4b00baa7a",
+        "antenna": "HGA",
+        "aocs_mode": "NM",
+        "call_eng": "RE",
+        "encoding": "Turbo 1/2 random",
+        "owlt": "000.00:16:00.812",
+        "pass_number": "1053",
+        "planner": "CF",
+        "station": "MLG",
+        "sym_rate": "526315",
+        "time_end": "2026-02-28T19:39:44.000Z",
+        "time_start": "2026-02-28T09:39:44.000Z",
+        "tm_rate": "262100"
+    },
+    {
+        "_id": "697d66d0981067f4b00baa7b",
+        "antenna": "HGA",
+        "aocs_mode": "NM",
+        "call_eng": "RE",
+        "encoding": "Turbo 1/2 random",
+        "owlt": "000.00:15:58.071",
+        "pass_number": "1054",
+        "planner": "CF",
+        "station": "MLG",
+        "sym_rate": "526315",
+        "time_end": "2026-03-01T17:22:20.000Z",
+        "time_start": "2026-03-01T08:50:34.000Z",
+        "tm_rate": "262100"
+    },
+    {
+        "_id": "697d66d0981067f4b00baa7c",
+        "antenna": "HGA",
+        "aocs_mode": "NM",
+        "call_eng": "RE",
+        "encoding": "Turbo 1/2 random",
+        "owlt": "000.00:15:52.479",
+        "pass_number": "1056",
+        "planner": "CF",
+        "station": "MLG",
+        "sym_rate": "526315",
+        "time_end": "2026-03-03T17:07:47.000Z",
+        "time_start": "2026-03-03T07:07:47.000Z",
+        "tm_rate": "262100"
+    },
+    {
+        "_id": "69a250d07afb196e2a8b5fcb",
+        "antenna": "HGA",
+        "aocs_mode": "NM",
+        "call_eng": "BA",
+        "encoding": "Turbo 1/2 random",
+        "owlt": "000.00:15:32.261",
+        "pass_number": "1063",
+        "planner": "PK/RE",
+        "station": "NNO",
+        "sym_rate": "526315",
+        "time_end": "2026-03-10T06:52:47.000Z",
+        "time_start": "2026-03-09T19:23:52.000Z",
+        "tm_rate": "262100"
+    }
+]

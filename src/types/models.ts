@@ -31,7 +31,35 @@ export type FileSystem = Directory[]
 
 export type Snapshot = {
   timestamp: string; // ISO string
-  description?: string; // Optional, e.g., "Full snapshot"
+  event: string;
 };
 
+
+export type Pass = {
+  id: string;
+  antenna: string;
+  aocs_mode: string;
+  call_eng: string;
+  encoding: string;
+  owlt: string;
+  pass_number: string;
+  planner: string;
+  station: string;
+  sym_rate: string;
+  time_end: string;
+  time_start: string;
+  tm_rate: string;
+}
+
 export type Snapshots = Snapshot[];
+
+
+export type FileDiff = {
+  directory_id: string
+  file_id: string
+  type: "added" | "deleted" | "modified"
+  oldSize?: number
+  newSize?: number
+}
+
+export type SnapshotDiff = FileDiff[]

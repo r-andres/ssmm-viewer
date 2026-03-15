@@ -1,19 +1,39 @@
 // src/api/mock.ts
-import mockData from "../assets/mock_data.json";
-import { FileSystem, Snapshot } from "../types/models";
+import fileStatus from "../assets/filestatus.json";
+import passes from "../assets/passes.json";
+
+import { FileSystem, Pass, Snapshot } from "../types/models";
 
 export function getMockSnapshots(): Snapshot[] {
-  return mockData.map((s: any) => ({
+  const snapshots =  [];
+  snapshots.push(...fileStatus.map((s: any) => ({
     timestamp: s.timestamp,
-    description: ""
-  }))
+    event: "file_status"
+  })));
+
+  passes.forEach((p) => {
+    snapshots.push({
+      timestamp: p.time_start,
+      event: "start_pass"
+    });
+    snapshots.push({
+      timestamp: p.time_end,
+      event: "end_pass"
+    });
+  });
+
+  snapshots.sort((s1, s2) => {
+    return s1.timestamp.localeCompare(s2.timestamp);
+  });
+
+  return snapshots
 }
 
 export function getMockFilesystem(snapshotTimestamp: string | null): FileSystem {
   if (!snapshotTimestamp) return [];
 
 
-  const snapshotFs = mockData.find((s: any) => s.timestamp === snapshotTimestamp)?.data;
+  const snapshotFs = fileStatus.find((s: any) => s.timestamp === snapshotTimestamp)?.data;
   if (!snapshotFs) return [];
 
   const fsArray: FileSystem = [];

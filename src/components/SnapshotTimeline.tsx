@@ -8,6 +8,8 @@ type Props = {
 };
 
 export default function SnapshotTimeline({ snapshots, currentSnapshot, onSelect }: Props) {
+
+  const radius = "13px";
   return (
     <div style={{
       height: "100%",
@@ -24,52 +26,69 @@ export default function SnapshotTimeline({ snapshots, currentSnapshot, onSelect 
         overflowX: "scroll",
         padding: "10px 0",
         alignItems: "center",
+        fontFamily: "arial",
+        fontSize: "10px"
 
       }}>
         {snapshots.map((snap, idx) => {
           const isSelected = snap.timestamp === currentSnapshot;
-          return (
-            <div
-              key={idx}
-              style={{ textAlign: "center", cursor: "pointer" }}
-              onClick={() => onSelect(snap)}
-            >
-              {/* Circle */}
-              <div style={{
-                width: "16px",
-                height: "16px",
-                borderRadius: "50%",
-                backgroundColor: isSelected ? "#030303" : "#3a3d41",
-                margin: "0 auto",
-                marginBottom: "4px",
-                border: isSelected ? "2px solid #8bc94a" : "2px solid transparent",
-                transition: "all 0.2s",
-              }} title={snap.description || snap.timestamp} />
+          const isFileStatus = snap.event === "file_status";
+          const isStartPass = snap.event === "start_pass";
 
-              {/* Date */}
-              <div style={{
-                fontSize: "12px",
-                whiteSpace: "nowrap",
-                color: isSelected ? "#1bb243" : "#0e587f",
-              }}>
-                {new Date(snap.timestamp).toISOString().slice(0,10)}<br/>
-                {new Date(snap.timestamp).toISOString().slice(11, 19)}
-              </div>
-
-              {/* Connector line */}
-              {idx < snapshots.length - 1 && (
+          if (isFileStatus) {
+            return (
+              <div
+                key={idx}
+                style={{ textAlign: "center", cursor: "pointer" }}
+                onClick={() => onSelect(snap)}
+              >
+                {/* Circle */}
                 <div style={{
-                  position: "absolute",
-                  top: "8px",
-                  left: "20px",
-                  width: "50px",
-                  height: "2px",
-                  backgroundColor: "#3a3d41",
-                  zIndex: 0
-                }} />
-              )}
-            </div>
-          );
+                  width: radius,
+                  height: radius,
+                  borderRadius: "50%",
+                  backgroundColor: isSelected ? "rgb(231, 96, 123)" : "#000000",
+                  margin: "0 auto",
+                  marginBottom: "4px",
+                  transition: "all 0.2s",
+                }} title={snap.timestamp} />
+
+                {/* Date */}
+                <div style={{
+                  whiteSpace: "nowrap",
+                  color: isSelected ? "#d84343" : "#0e587f",
+                }}>
+                  {new Date(snap.timestamp).toISOString().slice(0, 10)}<br />
+                  {new Date(snap.timestamp).toISOString().slice(11, 19)}
+                </div>
+
+              </div>
+            );
+          } else {
+            return (
+              <div
+                key={idx}
+                style={{ textAlign: "center" }}
+              >
+                
+                <span style={{ fontSize: "40px" }}>{isStartPass ? "🔊" : "🔇"}</span>
+
+                {/* Date */}
+                <div style={{
+                  whiteSpace: "nowrap",
+                  color: "#0e587f",
+                }}>
+                  {new Date(snap.timestamp).toISOString().slice(0, 10)}<br />
+                  {new Date(snap.timestamp).toISOString().slice(11, 19)}
+                </div>
+
+              </div>
+            );
+
+          }
+
+
+
         })}
       </div>
     </div>
