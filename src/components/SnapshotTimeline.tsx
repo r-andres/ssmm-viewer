@@ -32,7 +32,7 @@ export default function SnapshotTimeline({ snapshots, currentSnapshot, onSelect 
       }}>
         {snapshots.map((snap, idx) => {
           const isSelected = snap.timestamp === currentSnapshot;
-          const isFileStatus = snap.event === "file_status";
+          const isFileStatus = snap.event === "FileStatus";
           const isStartPass = snap.event === "start_pass";
 
           if (isFileStatus) {

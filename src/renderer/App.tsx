@@ -1,26 +1,46 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import DirectoryTree from "../components/DirectoryTree";
 import SnapshotTimeline from "../components/SnapshotTimeline";
 import { Snapshot, SnapshotDiff } from "../types/models";
 import { getMockFilesystem, getMockSnapshots } from "../api/mock";
+import { getFilesystem, getSnapshots} from "../api/client";
 import AppLayout from "../layout/AppLayout";
 import { diffSnapshots } from "../utils/diff"
 import DiffViewer from "../components/DiffViewer";
 
 
 export default function App() {
+  
   const mockSnapshots: Snapshot[] = getMockSnapshots();
-  const [currentSnapshot, setCurrentSnapshot] = useState<string | null>(mockSnapshots[0].timestamp);
+  const [currentSnapshot, setCurrentSnapshot] = useState<string | null>(null);
   const [diffs, setDiffs] = useState<SnapshotDiff>([])
-  function handleSnapshotSelect(timestamp: string) {
+  const [snapshots, setSnapshots] = useState<Snapshot[]>([])
+  
+  useEffect(() => {
 
-    const fileStatusSnapshots = mockSnapshots.filter(s => s.event === "file_status");
+    async function loadSnapshots() {
+
+      const data = await getSnapshots()
+
+      setSnapshots(data)
+      setCurrentSnapshot(data[0].timestamp)
+
+    }
+
+    loadSnapshots()
+
+  }, [])
+
+
+  async function handleSnapshotSelect(timestamp: string) {
+
+    const fileStatusSnapshots = snapshots.filter(s => s.event === "FileStatus");
 
     const index = fileStatusSnapshots.indexOf(fileStatusSnapshots.find(s => s.timestamp === timestamp)!)
 
     if (index > 0) {
-      const oldFs = getMockFilesystem(fileStatusSnapshots[index - 1].timestamp)
-      const newFs = getMockFilesystem(timestamp)
+      const oldFs = await getFilesystem(fileStatusSnapshots[index - 1].timestamp)
+      const newFs = await getFilesystem(timestamp)
       const newDiff = diffSnapshots(oldFs, newFs)
       setDiffs(newDiff)
     } else {
@@ -35,7 +55,7 @@ export default function App() {
 
       timeline={
         <SnapshotTimeline
-           snapshots={mockSnapshots}
+           snapshots={snapshots}
           currentSnapshot={currentSnapshot}
           onSelect={(snap) => handleSnapshotSelect(snap.timestamp)}
         />

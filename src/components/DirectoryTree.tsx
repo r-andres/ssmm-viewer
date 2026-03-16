@@ -15,8 +15,8 @@ export default function DirectoryTree({ currentSnapshot }: Props) {
 
   useEffect(() => {
     // In real app, fetch snapshot based on timestamp
-    // getFilesystem(currentSnapshot).then(setFs);
-    setFs(getMockFilesystem(currentSnapshot));
+    getFilesystem(currentSnapshot).then(setFs);
+    //setFs(getMockFilesystem(currentSnapshot));
   }, [currentSnapshot]);
 
   const toggleDir = (dirId: string) => {
@@ -50,18 +50,34 @@ export default function DirectoryTree({ currentSnapshot }: Props) {
             </div>
 
             {isExpanded && (
-              <ul style={{ marginLeft: '22px', listStyle: 'none', paddingLeft: 0, marginTop: '4px' }}>
+              <ul style={{ marginLeft: '22px', listStyle: 'none', paddingLeft: 0, marginTop: '4px' }} >
                 {dir.files.map(file => (
-                  <li key={file.file_id} style={{ display: 'flex', alignItems: 'center', padding: '2px 6px', borderRadius: '4px', fontFamily: 'monospace', fontSize: '13px' }} title={`Size: ${file.size.toLocaleString()} bytes`}>
-                    <span style={{ marginRight: '6px', color: '#9cdcfe' }}>📄</span>
-                    <span
-                      style={{
-                        color: file.mode === 'OPEN' ? "orange" : "gray"
-                      }}
-                    >
+                  <li
+                    key={file.file_id}
+                    style={{
+                      display: "grid",
+                      gridTemplateColumns: "20px 150px 1fr 1fr",
+                      alignItems: "center",
+                      padding: "2px 6px",
+                      borderRadius: 4,
+                      fontFamily: "monospace",
+                      fontSize: 13,
+                      gap: "8px"
+                    }}
+                  >
+                    <span>📄</span>
+
+                    <span style={{ color: file.mode === "OPEN" ? "orange" : "gray" }}>
                       {file.file_id}
                     </span>
-                    <span style={{ marginLeft: 'auto', color: '#c586c0' }}>{file.size.toLocaleString()} B</span>
+
+                    <span style={{ color: "#c586c0", textAlign: "right" }}>
+                      {file.size.toLocaleString()} B
+                    </span>
+
+                    <span style={{ color: "#888", textAlign: "right" }}>
+                      {file.creation_time}
+                    </span>
                   </li>
                 ))}
               </ul>
