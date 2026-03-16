@@ -6,18 +6,26 @@ import { getMockFilesystem } from "../api/mock";
 
 
 type Props = {
-  currentSnapshot: string | null;
+  currentFilesystem: FileSystem | null;
 };
 
-export default function DirectoryTree({ currentSnapshot }: Props) {
+export default function DirectoryTree({ currentFilesystem }: Props) {
   const [fs, setFs] = useState<FileSystem>([]);
   const [expandedDirs, setExpandedDirs] = useState<Record<string, boolean>>({});
 
+
+  // useEffect(() => {
+  //   // In real app, fetch snapshot based on timestamp
+  //   getFilesystem(currentSnapshot).then(setFs);
+  //   //setFs(getMockFilesystem(currentSnapshot));
+  // }, [currentSnapshot]);
+
   useEffect(() => {
-    // In real app, fetch snapshot based on timestamp
-    getFilesystem(currentSnapshot).then(setFs);
-    //setFs(getMockFilesystem(currentSnapshot));
-  }, [currentSnapshot]);
+    if (currentFilesystem) {
+      console.log(currentFilesystem)
+      setFs(currentFilesystem);
+    }
+  }, [currentFilesystem]);
 
   const toggleDir = (dirId: string) => {
     setExpandedDirs(prev => ({
