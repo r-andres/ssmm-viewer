@@ -8,17 +8,19 @@ type Props = {
   timeline: React.ReactNode
   sidebar: React.ReactNode
   content: React.ReactNode
+  footer: React.ReactNode
 }
 
 
-export default function AppLayout({ timeline, sidebar, content }: Props ) {
+export default function AppLayout({ timeline, sidebar, content,  footer }: Props ) {
 
   return (
     <div style={{ height: "100vh", display: "flex", flexDirection: "column" }}>
 
       {/* TOP TIMELINE */}
       <div style={{
-        height: "80px"
+        height: "100px",
+        marginBottom: "10px"
       }}>
         {timeline}
       </div>
@@ -49,6 +51,11 @@ export default function AppLayout({ timeline, sidebar, content }: Props ) {
 
       </Group>
 
+      <div style={{
+        height: "180px"
+      }}>
+        {footer}
+      </div>
     </div>
   )
 }

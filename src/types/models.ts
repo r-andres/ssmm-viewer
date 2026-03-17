@@ -63,3 +63,17 @@ export type FileDiff = {
 }
 
 export type SnapshotDiff = FileDiff[]
+
+
+export type DirectoryInfo = {
+  directory_id: string
+  max_dir_size?: number  
+  max_file_size?: number
+  max_wrt_timeout?: number  
+  max_wrt_speed?: number 
+  state?: string
+  priority?: number
+  rf_band?: string
+}
+
+export type DirectoryMap = Record<string, DirectoryInfo>;

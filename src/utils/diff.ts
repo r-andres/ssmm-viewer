@@ -1,4 +1,4 @@
-import { FileSystem } from "../types/models"
+import { DirectoryMap, FileSystem } from "../types/models"
 import { SnapshotDiff } from "../types/models"
 
 export function diffSnapshots(oldFs: FileSystem, newFs: FileSystem): SnapshotDiff {
@@ -63,4 +63,23 @@ export function diffSnapshots(oldFs: FileSystem, newFs: FileSystem): SnapshotDif
   }
 
   return diffs
+}
+
+
+export function mergeDirectoryMaps(
+  a: DirectoryMap,
+  b: DirectoryMap
+): DirectoryMap {
+  const result: DirectoryMap = {};
+
+  const keys = new Set([...Object.keys(a), ...Object.keys(b)]);
+
+  keys.forEach((key) => {
+    result[key] = {
+      ...a[key],
+      ...b[key],
+    };
+  });
+
+  return result;
 }

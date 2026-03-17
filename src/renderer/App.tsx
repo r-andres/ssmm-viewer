@@ -1,19 +1,19 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import DirectoryTree from "../components/DirectoryTree";
 import SnapshotTimeline from "../components/SnapshotTimeline";
-import { Snapshot, SnapshotDiff, FileSystem } from "../types/models";
-import { getMockFilesystem, getMockSnapshots } from "../api/mock";
-import { getFilesystem, getSnapshots} from "../api/client";
+import { Snapshot, SnapshotDiff, FileSystem, DirectoryMap } from "../types/models";
+import { getFilesystem, getSnapshots, getDirectoryInfo} from "../api/client";
 import AppLayout from "../layout/AppLayout";
-import { diffSnapshots } from "../utils/diff"
+import { diffSnapshots, mergeDirectoryMaps } from "../utils/diff"
 import DiffViewer from "../components/DiffViewer";
+import DirectoryGrid from "../components/DirectoryGrid";
 
 
 export default function App() {
   
-  const mockSnapshots: Snapshot[] = getMockSnapshots();
   const [currentSnapshot, setCurrentSnapshot] = useState<string | null>(null);
   const [currentFS, setCurrentFilesystem] = useState<FileSystem | null>(null);
+  const [currentDirectoryMap, setCurrentDirectoryMap] = useState<DirectoryMap | null>(null);
   const [diffs, setDiffs] = useState<SnapshotDiff>([])
   const [snapshots, setSnapshots] = useState<Snapshot[]>([])
   
@@ -50,6 +50,16 @@ export default function App() {
 
     setCurrentSnapshot(timestamp)
     setCurrentFilesystem(newFs)
+
+    const directoryDownlink = await getDirectoryInfo(timestamp, "DirectoryDownlink")
+    const directorySetup = await getDirectoryInfo(timestamp, "DirectorySetup")
+    if (!directoryDownlink && !directorySetup) {
+      return
+    }
+
+    const directoryMap = mergeDirectoryMaps(directoryDownlink, directorySetup)
+    console.log(directoryMap)
+    setCurrentDirectoryMap(directoryMap)
   }
 
   return (
@@ -69,6 +79,10 @@ export default function App() {
 
       content={
        <DirectoryTree currentFilesystem={currentFS} />
+      }
+
+      footer={
+        <DirectoryGrid currentDirectories={currentDirectoryMap} />
       }
 
     />

@@ -13,16 +13,8 @@ export default function DirectoryTree({ currentFilesystem }: Props) {
   const [fs, setFs] = useState<FileSystem>([]);
   const [expandedDirs, setExpandedDirs] = useState<Record<string, boolean>>({});
 
-
-  // useEffect(() => {
-  //   // In real app, fetch snapshot based on timestamp
-  //   getFilesystem(currentSnapshot).then(setFs);
-  //   //setFs(getMockFilesystem(currentSnapshot));
-  // }, [currentSnapshot]);
-
   useEffect(() => {
     if (currentFilesystem) {
-      console.log(currentFilesystem)
       setFs(currentFilesystem);
     }
   }, [currentFilesystem]);

@@ -9,6 +9,18 @@ type Props = {
 
 export default function SnapshotTimeline({ snapshots, currentSnapshot, onSelect }: Props) {
 
+  function getIcon(event: string) {
+    switch (event) {
+      case "DirectorySetup":
+        return "⚙️";
+      case "DirectoryDownlink":
+        return "📡";
+      default:
+        return "";
+    }
+  }
+
+
   const radius = "13px";
   return (
     <div style={{
@@ -33,7 +45,7 @@ export default function SnapshotTimeline({ snapshots, currentSnapshot, onSelect 
         {snapshots.map((snap, idx) => {
           const isSelected = snap.timestamp === currentSnapshot;
           const isFileStatus = snap.event === "FileStatus";
-          const isStartPass = snap.event === "start_pass";
+
 
           if (isFileStatus) {
             return (
@@ -71,7 +83,7 @@ export default function SnapshotTimeline({ snapshots, currentSnapshot, onSelect 
                 style={{ textAlign: "center" }}
               >
                 
-                <span style={{ fontSize: "40px" }}>{isStartPass ? "🔊" : "🔇"}</span>
+                <span style={{ fontSize: "40px" }}>{getIcon(snap.event)}</span>
 
                 {/* Date */}
                 <div style={{
