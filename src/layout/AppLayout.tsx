@@ -52,7 +52,7 @@ export default function AppLayout({ timeline, sidebar, content,  footer }: Props
       </Group>
 
       <div style={{
-        height: "180px"
+        height: "400px"
       }}>
         {footer}
       </div>

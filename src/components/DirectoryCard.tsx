@@ -14,7 +14,6 @@ export default function DirectoryCard({ directory, onClick }: Props) {
     cursor: "pointer",
     border: "1px solid #ddd",
     borderRadius: "12px",
-    padding: "8px",
     background: "#fff",
     display: "flex",
     flexDirection: "column",
@@ -30,7 +29,7 @@ export default function DirectoryCard({ directory, onClick }: Props) {
 
   return (
     <div style={cardStyle} onClick={onClick} >
-      <h2>{directory.directory_id}</h2>
+      <p>{directory.directory_id}</p>
       <p>({directory.priority})</p>
     </div>
   );

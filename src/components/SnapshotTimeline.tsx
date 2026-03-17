@@ -83,7 +83,7 @@ export default function SnapshotTimeline({ snapshots, currentSnapshot, onSelect 
                 style={{ textAlign: "center" }}
               >
                 
-                <span style={{ fontSize: "40px" }}>{getIcon(snap.event)}</span>
+                <span style={{ fontSize: "25px" }}>{getIcon(snap.event)}</span>
 
                 {/* Date */}
                 <div style={{
