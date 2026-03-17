@@ -8,32 +8,6 @@ export const styles = {
     fontFamily: "monospace"
   } as const,
 
-  card: {
-    cursor: "pointer",
-    border: "1px solid #ddd",
-    borderRadius: "12px",
-    padding: "8px",
-    background: "#fff",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
-    boxShadow: "0 2px 6px rgba(0,0,0,0.1)"
-  } as const,
-
-  card_disabled: {
-    cursor: "not-allowed",
-    border: "1px solid #ddd",
-    borderRadius: "12px",
-    padding: "8px",
-    background: "#fff",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
-    boxShadow: "0 2px 6px rgba(0,0,0,0.1)",
-    opacity: 0.3
-  } as const,
 
   overlay: {
     position: "fixed",

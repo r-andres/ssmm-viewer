@@ -6,11 +6,32 @@ interface Props {
   onClick: () => void;
 }
 
+
+
+
 export default function DirectoryCard({ directory, onClick }: Props) {
+  const cardStyle = {
+    cursor: "pointer",
+    border: "1px solid #ddd",
+    borderRadius: "12px",
+    padding: "8px",
+    background: "#fff",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    boxShadow: "0 2px 6px rgba(0,0,0,0.1)",
+    opacity: 1
+  }
+
+  cardStyle["opacity"] = (directory.state === "DISABLED") ? 0.5 : 1
+  cardStyle["background"] = (directory.rf_band === "x") ? "#ff00006c" : "#318fc58e"
+
+
   return (
-    <div style={(directory.state === "DISABLED") ? styles.card_disabled : styles.card} onClick={onClick} >
+    <div style={cardStyle} onClick={onClick} >
       <h2>{directory.directory_id}</h2>
-      <p>{directory.rf_band} ({directory.priority})</p>
+      <p>({directory.priority})</p>
     </div>
   );
 }
