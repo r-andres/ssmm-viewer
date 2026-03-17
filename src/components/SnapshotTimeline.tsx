@@ -20,6 +20,57 @@ export default function SnapshotTimeline({ snapshots, currentSnapshot, onSelect 
     }
   }
 
+  const leftButton: React.CSSProperties = {
+  position: "absolute",
+  top: "50%",
+  left: "10px",
+  background: "#333",
+  border: "none",
+  color: "white",
+  padding: "8px 10px",
+  borderRadius: "6px",
+  cursor: "pointer"
+}
+
+const rightButton: React.CSSProperties = {
+  position: "absolute",
+  top: "50%",
+  right: "10px",
+  background: "#333",
+  border: "none",
+  color: "white",
+  padding: "8px 10px",
+  borderRadius: "6px",
+  cursor: "pointer"
+}
+
+  const currentIndex = snapshots.findIndex(s => s.timestamp === currentSnapshot)
+
+
+  const goPrev = () => {
+    if (currentIndex > 0) {
+      onSelect(snapshots[currentIndex - 1])
+    }
+  }
+
+  const goNext = () => {
+    if (currentIndex < snapshots.length - 1) {
+      onSelect(snapshots[currentIndex + 1])
+    }
+  }
+
+  useEffect(() => {
+
+  const handler = (e: KeyboardEvent) => {
+    if (e.key === "ArrowLeft") goPrev()
+    if (e.key === "ArrowRight") goNext()
+  }
+
+  window.addEventListener("keydown", handler)
+
+  return () => window.removeEventListener("keydown", handler)
+
+}, [currentIndex])
 
   const radius = "13px";
   return (
@@ -42,6 +93,11 @@ export default function SnapshotTimeline({ snapshots, currentSnapshot, onSelect 
         fontSize: "10px"
 
       }}>
+ <button style={leftButton} onClick={goPrev} disabled={currentIndex <= 0}>
+        ◀
+      </button>
+
+
         {snapshots.map((snap, idx) => {
           const isSelected = snap.timestamp === currentSnapshot;
           const isFileStatus = snap.event === "FileStatus";
@@ -88,7 +144,7 @@ export default function SnapshotTimeline({ snapshots, currentSnapshot, onSelect 
                 {/* Date */}
                 <div style={{
                   whiteSpace: "nowrap",
-                  color: "#0e587f",
+                  color: isSelected ? "#d84343" : "#0e587f",
                 }}>
                   {new Date(snap.timestamp).toISOString().slice(0, 10)}<br />
                   {new Date(snap.timestamp).toISOString().slice(11, 19)}
@@ -102,6 +158,13 @@ export default function SnapshotTimeline({ snapshots, currentSnapshot, onSelect 
 
 
         })}
+        <button
+        style={rightButton}
+        onClick={goNext}
+        disabled={currentIndex === snapshots.length - 1}
+      >
+        ▶
+      </button>
       </div>
     </div>
   );

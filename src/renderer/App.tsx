@@ -7,6 +7,7 @@ import AppLayout from "../layout/AppLayout";
 import { diffSnapshots, mergeDirectoryMaps } from "../utils/diff"
 import DiffViewer from "../components/DiffViewer";
 import DirectoryGrid from "../components/DirectoryGrid";
+import SnapshotCard from "../components/SnapshotCard";
 
 
 export default function App() {
@@ -24,7 +25,9 @@ export default function App() {
       const data = await getSnapshots()
 
       setSnapshots(data)
-      setCurrentSnapshot(data[0].timestamp)
+      const firstTimestamp = data[0].timestamp
+      setCurrentSnapshot(firstTimestamp)
+      setCurrentFilesystem(await getFilesystem(firstTimestamp))
 
     }
 
@@ -74,7 +77,7 @@ export default function App() {
       }
 
       sidebar={
-       <DiffViewer diffs={diffs} />
+        diffs.length > 0 ? <DiffViewer diffs={diffs} /> : <SnapshotCard snapshot={snapshots.find(s => s.timestamp === currentSnapshot)!} onClick={() => {}}></SnapshotCard>
       }
 
       content={
