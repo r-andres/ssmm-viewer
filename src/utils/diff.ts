@@ -1,9 +1,15 @@
-import { DirectoryMap, FileSystem } from "../types/models"
+import { DirectoryMap, FileDiff, FileSystem } from "../types/models"
 import { SnapshotDiff } from "../types/models"
 
-export function diffSnapshots(oldFs: FileSystem, newFs: FileSystem): SnapshotDiff {
+export function diffSnapshots(
+  oldFs: FileSystem, 
+  newFs: FileSystem,
+  originalTimestamp: string,
+  newTimestamp: string)
+  
+  : SnapshotDiff {
 
-  const diffs: SnapshotDiff = []
+  const diffs: FileDiff[] = []
 
   const oldMap = new Map<string, number>()
   const newMap = new Map<string, number>()
@@ -62,7 +68,11 @@ export function diffSnapshots(oldFs: FileSystem, newFs: FileSystem): SnapshotDif
     }
   }
 
-  return diffs
+  return {
+    originalTimestamp,
+    newTimestamp,
+    diffs
+  }
 }
 
 

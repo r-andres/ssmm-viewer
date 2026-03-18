@@ -2,7 +2,7 @@ export const styles = {
   grid: {
     display: "grid",
     gridTemplateColumns: "repeat(auto-fill, minmax(60px, 1fr))",
-    gap: "16px",
+    gap: "10px",
     padding: "5px",
     fontSize: "10px",
     fontFamily: "monospace"

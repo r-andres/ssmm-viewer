@@ -1,17 +1,24 @@
 import { SnapshotDiff } from "../types/models"
 
 type Props = {
-  diffs: SnapshotDiff
+  comparison: SnapshotDiff
 }
 
-export default function DiffViewer({ diffs }: Props) {
+export default function DiffViewer({ comparison }: Props) {
 
   return (
-    <div style={{ padding: 20, fontFamily: "monospace" }}>
+    <div style={{
+      fontFamily: "arial"}}>
+    <p>From: {comparison.originalTimestamp} <br></br>
+      To: {comparison.newTimestamp}</p>
+    <div style={{ 
+      height: 400,
+      overflowY: "auto",        // only vertical scroll
+      padding: 15,
+      fontFamily: "monospace"
 
-      <h3>Snapshot Diff</h3>
-
-      {diffs.map((d, i) => {
+     }}>
+      {comparison.diffs.map((d, i) => {
 
         const color =
           d.type === "added" ? "#4CAF50" :
@@ -36,6 +43,7 @@ export default function DiffViewer({ diffs }: Props) {
         )
       })}
 
+    </div>
     </div>
   )
 }

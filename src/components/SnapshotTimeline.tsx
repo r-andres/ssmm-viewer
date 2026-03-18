@@ -29,18 +29,20 @@ export default function SnapshotTimeline({ snapshots, currentSnapshot, onSelect 
   color: "white",
   padding: "8px 10px",
   borderRadius: "6px",
+   height: "50px",
   cursor: "pointer"
 }
 
 const rightButton: React.CSSProperties = {
   position: "absolute",
   top: "50%",
-  right: "10px",
+  left: "30px",
   background: "#333",
   border: "none",
   color: "white",
-  padding: "8px 10px",
+  padding: "10px",
   borderRadius: "6px",
+  height: "50px",
   cursor: "pointer"
 }
 
@@ -76,11 +78,10 @@ const rightButton: React.CSSProperties = {
   return (
     <div style={{
       height: "100%",
-      padding: "20px",
       display: "flex",
       flexDirection: "column",
       color: "#d4d4d4",
-      overflowX: "auto"
+      overflowX: "hidden"
     }}>
 
       <div style={{
@@ -137,6 +138,7 @@ const rightButton: React.CSSProperties = {
               <div
                 key={idx}
                 style={{ textAlign: "center" }}
+                onClick={() => onSelect(snap)}
               >
                 
                 <span style={{ fontSize: "25px" }}>{getIcon(snap.event)}</span>

@@ -62,7 +62,11 @@ export type FileDiff = {
   newSize?: number
 }
 
-export type SnapshotDiff = FileDiff[]
+export type SnapshotDiff = {
+  originalTimestamp: string,
+  newTimestamp: string,
+  diffs: FileDiff[]
+}
 
 
 export type DirectoryInfo = {

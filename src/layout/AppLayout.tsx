@@ -12,7 +12,7 @@ type Props = {
 }
 
 
-export default function AppLayout({ timeline, sidebar, content,  footer }: Props ) {
+export default function AppLayout({ timeline, sidebar, content, footer }: Props) {
 
   return (
     <div style={{ height: "100vh", display: "flex", flexDirection: "column" }}>
@@ -31,19 +31,20 @@ export default function AppLayout({ timeline, sidebar, content,  footer }: Props
         <Panel defaultSize={25} minSize={15}>
           <div style={{
             height: "100%",
-            padding: "20px",
-            borderRight: "1px solid #333"
           }}>
-           {sidebar}
+            {sidebar}
           </div>
         </Panel>
 
-        <Separator></Separator>
+        <Separator style={{backgroundColor: "red"}}></Separator>
 
         <Panel defaultSize={75}>
           <div style={{
             height: "100%",
-            padding: "10px"
+            overflow: "auto",
+            borderBottom: "1px solid #333",
+            boxShadow: "0 2px 6px rgba(0,0,0,0.4)",
+            zIndex: 2
           }}>
             {content}
           </div>
@@ -52,7 +53,10 @@ export default function AppLayout({ timeline, sidebar, content,  footer }: Props
       </Group>
 
       <div style={{
-        height: "400px"
+        height: "400px",
+        borderBottom: "1px solid #333",
+        boxShadow: "0 2px 6px rgba(0,0,0,0.4)",
+        zIndex: 2
       }}>
         {footer}
       </div>

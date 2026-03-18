@@ -19,6 +19,14 @@ export default function DirectoryGrid({ currentDirectories }: Props) {
   }, [currentDirectories]);
 
 
+  if (!currentDirectories) {
+    return <div style={{
+      fontFamily: "arial",
+      padding: "5px"
+    }}>Directory information not available</div>;
+  } 
+
+
   return (
     <div style={styles.grid}>
         {directories.map(directory => (

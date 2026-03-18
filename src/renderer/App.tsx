@@ -15,7 +15,7 @@ export default function App() {
   const [currentSnapshot, setCurrentSnapshot] = useState<string | null>(null);
   const [currentFS, setCurrentFilesystem] = useState<FileSystem | null>(null);
   const [currentDirectoryMap, setCurrentDirectoryMap] = useState<DirectoryMap | null>(null);
-  const [diffs, setDiffs] = useState<SnapshotDiff>([])
+  const [diffs, setDiffs] = useState<SnapshotDiff | null>()
   const [snapshots, setSnapshots] = useState<Snapshot[]>([])
   
   useEffect(() => {
@@ -44,11 +44,12 @@ export default function App() {
     const newFs = await getFilesystem(timestamp)
 
     if (index > 0) {
-      const oldFs = await getFilesystem(fileStatusSnapshots[index - 1].timestamp)
-      const newDiff = diffSnapshots(oldFs, newFs)
+      const previousTimestamp = fileStatusSnapshots[index - 1].timestamp
+      const oldFs = await getFilesystem(previousTimestamp)
+      const newDiff = diffSnapshots(oldFs, newFs, previousTimestamp, timestamp)
       setDiffs(newDiff)
     } else {
-      setDiffs([])
+      setDiffs(null)
     }
 
     setCurrentSnapshot(timestamp)
@@ -61,7 +62,6 @@ export default function App() {
     }
 
     const directoryMap = mergeDirectoryMaps(directoryDownlink, directorySetup)
-    console.log(directoryMap)
     setCurrentDirectoryMap(directoryMap)
   }
 
@@ -77,7 +77,7 @@ export default function App() {
       }
 
       sidebar={
-        diffs.length > 0 ? <DiffViewer diffs={diffs} /> : <SnapshotCard snapshot={snapshots.find(s => s.timestamp === currentSnapshot)!} onClick={() => {}}></SnapshotCard>
+        diffs ? <DiffViewer comparison={diffs} /> : <SnapshotCard snapshot={snapshots.find(s => s.timestamp === currentSnapshot)!} onClick={() => {}}></SnapshotCard>
       }
 
       content={
